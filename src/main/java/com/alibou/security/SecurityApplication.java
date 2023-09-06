@@ -2,15 +2,15 @@ package com.alibou.security;
 
 import com.alibou.security.auth.AuthenticationService;
 import com.alibou.security.auth.RegisterRequest;
-import com.alibou.security.user.Role;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-import static com.alibou.security.user.Role.ADMIN;
-import static com.alibou.security.user.Role.MANAGER;
+import java.util.ArrayList;
+
+import static com.alibou.security.project.baza.user.Role.ADMIN;
+import static com.alibou.security.project.baza.user.Role.MANAGER;
 
 @SpringBootApplication
 public class SecurityApplication {
@@ -25,20 +25,22 @@ public class SecurityApplication {
 	) {
 		return args -> {
 			var admin = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
+					.firstName("Admin")
+					.lastName("Admin")
 					.email("admin@mail.com")
 					.password("password")
 					.role(ADMIN)
+					.receiptList(new ArrayList<>())
 					.build();
 			System.out.println("Admin token: " + service.register(admin).getAccessToken());
 
 			var manager = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
+					.firstName("Admin")
+					.lastName("Admin")
 					.email("manager@mail.com")
 					.password("password")
 					.role(MANAGER)
+					.receiptList(new ArrayList<>())
 					.build();
 			System.out.println("Manager token: " + service.register(manager).getAccessToken());
 

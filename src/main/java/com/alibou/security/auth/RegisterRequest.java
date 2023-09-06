@@ -1,10 +1,13 @@
 package com.alibou.security.auth;
 
-import com.alibou.security.user.Role;
+import com.alibou.security.project.baza.model.Receipt;
+import com.alibou.security.project.baza.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -12,9 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
 
-  private String firstname;
-  private String lastname;
+  private String firstName;
+  private String lastName;
   private String email;
   private String password;
   private Role role;
+  private List<Receipt> receiptList;
 }

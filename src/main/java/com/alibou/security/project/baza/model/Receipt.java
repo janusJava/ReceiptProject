@@ -1,6 +1,6 @@
 package com.alibou.security.project.baza.model;
 
-import com.alibou.security.user.User;
+import com.alibou.security.project.baza.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

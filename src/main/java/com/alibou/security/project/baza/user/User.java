@@ -1,7 +1,8 @@
-package com.alibou.security.user;
+package com.alibou.security.project.baza.user;
 
 import com.alibou.security.project.baza.model.Receipt;
 import com.alibou.security.token.Token;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -11,7 +12,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
@@ -26,25 +26,29 @@ public class User implements UserDetails {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(nullable = false)
-  private String firstname;
+  @Column()
+  private String firstName;
 
-  @Column(nullable = false)
-  private String lastname;
+  @Column()
+  private String lastName;
 
-  @Column(nullable = false)
+  @Column()
   private String email;
 
-  @Column(nullable = false)
+  @Column()
+  @JsonIgnore
   private String password;
 
   @Enumerated(EnumType.STRING)
+  @JsonIgnore
   private Role role;
 
   @OneToMany(mappedBy = "user")
+  @JsonIgnore
   private List<Token> tokens;
 
   @OneToMany(mappedBy = "user")
+  @JsonIgnore
   List<Receipt> receiptList;
 
   @Override
