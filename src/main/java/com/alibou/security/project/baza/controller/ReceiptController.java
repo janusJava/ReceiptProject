@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -34,5 +35,11 @@ public class ReceiptController {
         log.info("Meter controller: Deleting meter {id: {}}", receiptId);
         receiptService.deleteReceipt(receiptId);
         log.debug("Meter controller: Deleted meter {id: {}}", receiptId);
+    }
+
+    @GetMapping("/sum")
+    public ResponseEntity<BigDecimal>sumOfAllReceipts(){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(receiptService.sumOfAllReceipts());
     }
 }
