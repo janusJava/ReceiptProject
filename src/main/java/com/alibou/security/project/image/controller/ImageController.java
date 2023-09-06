@@ -25,6 +25,7 @@ public class ImageController {
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws Exception {
+        System.out.println("gowno");
         //TODO: LOGIKE DO SERWISU!!!!!!!!!!!!!!!!!
         String uploadImage = imageService.uploadImage(file);
         BlobInfo blobInfo = googleCloudService.uploadObjectFromMemory(file.getBytes());

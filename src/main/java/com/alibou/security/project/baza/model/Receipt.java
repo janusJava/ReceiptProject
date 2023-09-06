@@ -20,15 +20,15 @@ public class Receipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long receiptId;
+    Integer receiptId;
 
-    @Column(nullable = false)
+    @Column()
     LocalDate date;
 
-    @Column(nullable = false)
+    @Column()
     String shopName;
 
-    @Column(nullable = false)
+    @Column()
     BigDecimal money;
 
     @ManyToOne

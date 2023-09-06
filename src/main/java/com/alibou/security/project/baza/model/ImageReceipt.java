@@ -15,7 +15,7 @@ public class ImageReceipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long imageReceiptId;
+    Integer imageReceiptId;
 
     String name;
 

@@ -1,16 +1,22 @@
 package com.alibou.security.project.image.google;
 
 
+import com.alibou.security.project.baza.model.Receipt;
+import com.alibou.security.project.baza.repository.ReceiptRepository;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.google.cloud.vision.v1.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +33,23 @@ public class GoogleCloudServiceImpl implements GoogleCloudService {
     @Value("${bucket.name}")
     private String bucketName;
 
+    private final ReceiptRepository receiptRepository;
+    @Autowired
+    public GoogleCloudServiceImpl(ReceiptRepository receiptRepository) {
+        this.receiptRepository = receiptRepository;
+    }
+
     @Override
     public BlobInfo uploadObjectFromMemory(byte[] imageBytes) throws IOException {
         String objectName = generateObjectName();
-        Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
+        Storage storage = StorageOptions.newBuilder()
+                .setProjectId(projectId)
+                .build()
+                .getService();
         BlobId blobId = BlobId.of(bucketName, objectName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                .setContentType("image/jpeg")
+                .build();
         storage.createFrom(blobInfo, new ByteArrayInputStream(imageBytes));
         log.info("Object " + objectName + " uploaded to bucket " + bucketName);
         return blobInfo;
@@ -66,10 +83,12 @@ public class GoogleCloudServiceImpl implements GoogleCloudService {
             return e.getMessage();
         }
         String text = visionResponse.getFullTextAnnotation().getText();
-        //TODO: USUNĄĆ FINALNIE W PRACY - TYLKO DO TESTÓW!!!!!!!!!!
-        System.out.println("Suma: " + getAmountOfMoney(text));
-        System.out.println("Data: " + getDate(text));
-        System.out.println("Sklep: " + getShopName(text));
+        Receipt receipt = Receipt.builder()
+                .date(getDate(text))
+                .shopName(getShopName(text))
+                .money(getAmountOfMoney(text))
+                .build();
+        receiptRepository.save(receipt);
         return text;
     }
 
