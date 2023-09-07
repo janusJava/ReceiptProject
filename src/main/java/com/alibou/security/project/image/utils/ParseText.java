@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class ParseText {
     private static final String REGEX_DATE = "\\d{4}-\\d{2}-\\d{2}";
     private static final String REGEX_MONEY = "\\d{1,4}(?:,\\d{2}|\\.\\d{2})";
-    private static final String DIFFERENT_SHOP = "Nieznana nazwa";
+    private static final String DIFFERENT_SHOP = "KAUFLAND";
     private static final LocalDate MOCKED_DATE = LocalDate.of(2023, 6, 9);
 
     public static BigDecimal getAmountOfMoney(String input) {

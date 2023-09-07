@@ -8,8 +8,10 @@ public interface ImageService {
 
     String uploadImage(MultipartFile file) throws Exception;
 
-    byte[] downloadImage(String fileName);
+    byte[] downloadImage(Integer id);
 
     ImageReceipt findByName(String filename);
+
+    ImageReceipt findById(Integer id);
 
 }

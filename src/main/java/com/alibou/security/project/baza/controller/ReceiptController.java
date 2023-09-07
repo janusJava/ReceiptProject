@@ -31,7 +31,7 @@ public class ReceiptController {
 
     @DeleteMapping(value = "/{receiptId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteReceipt(Integer receiptId) {
+    public void deleteReceipt(@PathVariable Integer receiptId) {
         log.info("Meter controller: Deleting meter {id: {}}", receiptId);
         receiptService.deleteReceipt(receiptId);
         log.debug("Meter controller: Deleted meter {id: {}}", receiptId);

@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface ImageReceiptRepository extends JpaRepository<ImageReceipt, Long> {
+public interface ImageReceiptRepository extends JpaRepository<ImageReceipt, Integer > {
 
     Optional<ImageReceipt> findByName(String fileName);
+    Optional<ImageReceipt> findById(Integer id);
 
 }

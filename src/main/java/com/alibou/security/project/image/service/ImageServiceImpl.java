@@ -34,8 +34,8 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public byte[] downloadImage(String fileName) {
-        ImageReceipt imageReceipt = findByName(fileName);
+    public byte[] downloadImage(Integer id) {
+        ImageReceipt imageReceipt = findById(id);
         return ImageSize.decompressImage(imageReceipt.getImageData());
     }
 
@@ -47,5 +47,10 @@ public class ImageServiceImpl implements ImageService {
         } else {
             throw new CouldNotFindEntityException("Could not find ImageReceipt entity with provided filename: " + filename);
         }
+    }
+
+    @Override
+    public ImageReceipt findById(Integer id){
+        return imageReceiptRepository.findById(id).get();
     }
 }
